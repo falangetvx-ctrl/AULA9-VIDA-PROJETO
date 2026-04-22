@@ -1,0 +1,1912 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Projeto de Vida (AEE) — Aula 9 Premium • Persistência, Esforço e Responsabilidade Acadêmica</title>
+
+<style>
+/* =========================================================
+   0) TEMA PREMIUM (mesmo padrão Aulas 3–8)
+========================================================= */
+:root{
+  --paper:#f3f4df;
+  --ink:#111;
+
+  --violet:#8e44ad;
+  --violet2:#b36cff;
+
+  --blue:#3aa0e6;
+  --blue2:#64d2ff;
+
+  --green:#2ecc71;
+  --green2:#7CFFB2;
+
+  --orange:#f39c12;
+  --orange2:#ffd08a;
+
+  --red:#e74c3c;
+  --red2:#ff8b7f;
+
+  --shadow: rgba(0,0,0,.16);
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  background:#e5e7eb;
+  font-family: Arial, Helvetica, sans-serif;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow-x:auto;
+}
+
+.wrap{
+  display:none;
+  flex-direction:column;
+  gap:14px;
+  padding-bottom:18px;
+}
+
+.page{
+  width:297mm;
+  height:480mm;
+  background: var(--paper);
+  position:relative;
+  overflow:hidden;
+  box-shadow: 0 10px 30px var(--shadow);
+  border-radius: 10px;
+}
+
+.content{
+  position:absolute;
+  left:18mm;
+  right:18mm;
+  top:16mm;
+  bottom:18mm;
+}
+
+/* FUNDO DECOR (leve, premium) */
+.content::before{
+  content:"";
+  position:absolute;
+  inset:-20px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(142,68,173,.14), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(58,160,230,.14), transparent 45%),
+    radial-gradient(circle at 20% 85%, rgba(46,204,113,.12), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(243,156,18,.12), transparent 50%);
+  z-index:0;
+  pointer-events:none;
+}
+.content > *{ position:relative; z-index:1; }
+
+/* CABEÇALHO */
+.header{
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+.bncc{
+  font-weight:900;
+  font-size:10pt;
+  text-align:right;
+  color:#1b1b1b;
+}
+.centerTitle{
+  font-weight:900;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+  font-size:11pt;
+  text-align:center;
+  color: var(--violet);
+}
+.bars{
+  margin-top:6px;
+  display:grid;
+  grid-template-columns:1fr 10px 1fr;
+  gap:10px;
+}
+.bar{
+  height:6px;
+  border-radius:999px;
+  background: linear-gradient(90deg, var(--violet), var(--blue));
+}
+.bar.alt{
+  background: linear-gradient(90deg, var(--orange), var(--green));
+}
+
+/* BANNER */
+.banner{
+  margin-top:10px;
+  border-radius:16px;
+  padding:12px 14px;
+  border: 2px solid rgba(0,0,0,.12);
+  background: linear-gradient(90deg, rgba(142,68,173,.14), rgba(58,160,230,.14));
+}
+.bannerTitle{
+  font-weight:900;
+  font-size:14pt;
+  color:#2b0b3b;
+  margin:0;
+}
+.bannerSub{
+  margin:6px 0 0 0;
+  font-size:10.5pt;
+  line-height:1.25;
+  color:#222;
+}
+.badgeRow{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff;
+  border: 2px dashed rgba(0,0,0,.2);
+  font-weight:900;
+  font-size:9.2pt;
+}
+
+/* COLUNAS / CARDS */
+.cols{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:10px;
+  border: 2px solid rgba(0,0,0,.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.10;
+  pointer-events:none;
+}
+.card.green::before{ background: linear-gradient(120deg, var(--green), var(--green2)); }
+.card.orange::before{ background: linear-gradient(120deg, var(--orange), var(--orange2)); }
+.card.blue::before{ background: linear-gradient(120deg, var(--blue), var(--blue2)); }
+.card.violet::before{ background: linear-gradient(120deg, var(--violet), var(--violet2)); }
+.card.red::before{ background: linear-gradient(120deg, var(--red), var(--red2)); }
+
+.cardTitle{
+  margin:0 0 6px 0;
+  text-align:center;
+  font-weight:900;
+  font-size:11pt;
+  color:#2b0b3b;
+}
+.hint{
+  margin:0 0 8px 0;
+  text-align:center;
+  font-size:9.6pt;
+  line-height:1.25;
+  color:#1f1f1f;
+}
+.small{ font-size:9.2pt; color:#222; }
+
+.warn{
+  display:none;
+  background:#fff3e0;
+  border:2px solid rgba(243,156,18,.6);
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:9.2pt;
+  line-height:1.25;
+  margin-top:8px;
+}
+.okBadge{
+  display:none;
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:9pt;
+  background:#eafff1;
+  border:2px solid rgba(46,204,113,.6);
+}
+
+/* BOTÕES */
+.controls{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.ctrlBtn{
+  border:2px solid rgba(0,0,0,.55);
+  background:#fff;
+  border-radius:12px;
+  padding:7px 10px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:9.5pt;
+}
+.ctrlBtn:hover{ transform: translateY(-1px); }
+.ctrlBtn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
+
+/* TOP BAR */
+.topBar{
+  width:min(297mm,96vw);
+  border-radius:16px;
+  padding:10px;
+  background:#fff;
+  border:2px solid rgba(0,0,0,.12);
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+}
+.pill{
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  border:2px dashed rgba(0,0,0,.18);
+  background:#fafafa;
+  font-weight:900;
+  font-size:9pt;
+}
+.progressBar{
+  width:220px;
+  height:12px;
+  border-radius:999px;
+  background:#eee;
+  border:1px solid rgba(0,0,0,.12);
+  overflow:hidden;
+}
+.progressFill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+}
+
+/* INPUTS */
+textarea, input[type="text"], select{
+  width:100%;
+  border:2px solid rgba(0,0,0,.22);
+  border-radius:12px;
+  padding:9px 10px;
+  font-size:10pt;
+  outline:none;
+  background:#fff;
+}
+textarea{ min-height:66px; resize:vertical; }
+
+/* TOGGLES */
+.pillGrid{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.togglePill{
+  border:2px solid rgba(0,0,0,.25);
+  border-radius:999px;
+  padding:7px 10px;
+  font-weight:900;
+  font-size:9pt;
+  background:#fff;
+  cursor:pointer;
+}
+.togglePill.on{
+  border-color: rgba(46,204,113,.85);
+  box-shadow: 0 0 0 3px rgba(46,204,113,.18) inset;
+}
+
+/* CHECK GRID */
+.checkGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:8px;
+}
+.checkItem{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  border-radius:12px;
+  border:2px solid rgba(0,0,0,.10);
+  background:#fff;
+  padding:8px;
+}
+.checkItem input{ margin-top:2px; }
+
+/* MINI CARTAS */
+.cards{
+  display:grid;
+  gap:8px;
+}
+.cardMini{
+  border-radius:14px;
+  border:2px solid rgba(0,0,0,.12);
+  background:#fff;
+  padding:10px;
+}
+.miniTop{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.miniTxt{
+  font-weight:900;
+  font-size:9.6pt;
+}
+.miniBtns{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.miniBtn{
+  border:2px solid rgba(0,0,0,.32);
+  background:#fff;
+  border-radius:999px;
+  padding:6px 10px;
+  font-weight:900;
+  font-size:9pt;
+  cursor:pointer;
+}
+.miniBtn.on{
+  border-color: rgba(58,160,230,.85);
+  box-shadow: 0 0 0 3px rgba(58,160,230,.18) inset;
+}
+
+/* SOPA DE LETRAS (INTERATIVA) */
+.wsWrap{
+  border-radius:16px;
+  border:2px solid rgba(0,0,0,.12);
+  background:#fff;
+  padding:10px;
+}
+.wsGrid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:4px;
+  user-select:none;
+  margin-top:8px;
+}
+.wsCell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:28px;
+  border-radius:8px;
+  border:2px solid rgba(0,0,0,.14);
+  font-weight:900;
+  background:#fafafa;
+  cursor:pointer;
+}
+.wsCell.sel{
+  background: rgba(58,160,230,.18);
+  border-color: rgba(58,160,230,.55);
+}
+.wsCell.hit{
+  background: rgba(46,204,113,.22);
+  border-color: rgba(46,204,113,.65);
+}
+.wsList{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:6px 10px;
+  margin-top:10px;
+}
+.wordTag{
+  border-radius:999px;
+  padding:6px 10px;
+  border:2px dashed rgba(0,0,0,.2);
+  font-weight:900;
+  font-size:9pt;
+  background:#fff;
+}
+.wordTag.found{
+  border-color: rgba(46,204,113,.75);
+  background: rgba(46,204,113,.12);
+}
+
+/* MINIGAME COBRINHA */
+#snakeCanvas{
+  display:block;
+  width:100%;
+  max-width:520px;
+  aspect-ratio:1/1;
+  height:auto;
+  margin:10px auto;
+  border:3px solid rgba(0,0,0,.72);
+  border-radius:18px;
+  background:
+    linear-gradient(180deg, #050b16 0%, #09172a 55%, #0d223b 100%);
+  box-shadow:
+    inset 0 0 26px rgba(255,255,255,.08),
+    inset 0 0 60px rgba(58,160,230,.08),
+    0 10px 24px rgba(0,0,0,.22);
+  touch-action:none;
+}
+.gameHud{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:8px;
+  margin-top:8px;
+}
+.gameStat{
+  background:#fff;
+  border:2px dashed rgba(0,0,0,.16);
+  border-radius:14px;
+  padding:8px 6px;
+  text-align:center;
+  font-weight:900;
+  font-size:9.3pt;
+}
+#snakeStatus{
+  margin-top:8px;
+  text-align:center;
+  font-weight:900;
+  font-size:9.5pt;
+  color:#2b0b3b;
+}
+.snakeMiniLegend{
+  margin-top:8px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.snakeTag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:2px dashed rgba(0,0,0,.18);
+  background:#fff;
+  font-weight:900;
+  font-size:9pt;
+}
+.snakeTag.good{ box-shadow:0 0 0 3px rgba(46,204,113,.12) inset; }
+.snakeTag.bad{ box-shadow:0 0 0 3px rgba(231,76,60,.12) inset; }
+.gameMobilePad{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  align-items:center;
+}
+.gamePadCol{ display:flex; justify-content:center; }
+.gamePadStack{ display:grid; gap:8px; width:100%; }
+.gameTouchBtn{
+  min-width:74px;
+  min-height:56px;
+  border:2px solid rgba(0,0,0,.55);
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#eef4ff);
+  box-shadow:0 4px 10px rgba(0,0,0,.10);
+  font-weight:900;
+  font-size:11pt;
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:manipulation;
+}
+.gameTouchBtn.primary{
+  background:linear-gradient(180deg,#fff8e9,#ffe1a8);
+}
+.gameLegend{
+  margin-top:8px;
+  text-align:center;
+  font-size:9pt;
+  color:#333;
+}
+@media (max-width:720px){
+  .gameHud{ grid-template-columns:1fr 1fr; }
+  .gameTouchBtn{ min-width:0; width:100%; min-height:58px; font-size:12pt; }
+}
+
+/* OVERLAYS */
+.overlay{
+  position:fixed; inset:0;
+  background: rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  z-index:9999;
+}
+.modal{
+  width:min(780px, 96vw);
+  background:#fff;
+  border-radius:18px;
+  padding:14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  border:2px solid rgba(0,0,0,.12);
+}
+.modal h2{ margin:0 0 8px 0; font-size:17pt; }
+.modal .sub{ margin:0 0 12px 0; font-size:10.5pt; line-height:1.25; color:#222; }
+.formGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+@media (max-width:720px){
+  .formGrid{ grid-template-columns:1fr; }
+  .wsGrid{ grid-template-columns: repeat(12, 1fr); }
+  .wsCell{ height:26px; font-size:10pt; }
+}
+.modalActions{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+.bigBtn{
+  border:2px solid rgba(0,0,0,.6);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:900;
+}
+.bigBtn.primary{
+  background: linear-gradient(90deg, rgba(142,68,173,.14), rgba(58,160,230,.14));
+  border-color: rgba(142,68,173,.55);
+}
+.bigBtn:disabled{ opacity:.5; cursor:not-allowed; }
+
+#certOverlay{ display:none; }
+#certCard{
+  width:min(920px, 96vw);
+  background:#fff;
+  border-radius:18px;
+  padding:14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+#certInner{
+  border:3px solid rgba(142,68,173,.55);
+  border-radius:16px;
+  padding:16px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(58,160,230,.18), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(46,204,113,.14), transparent 45%),
+    linear-gradient(180deg, #fbf7ff, #ffffff);
+}
+#certTitle{
+  text-align:center;
+  font-weight:900;
+  font-size:22pt;
+  color:#4a148c;
+}
+#certSub{
+  margin-top:6px;
+  text-align:center;
+  font-weight:900;
+  font-size:11.5pt;
+  color:#111;
+}
+#certName{ margin-top:12px; text-align:center; font-size:12pt; }
+#certMeta{
+  margin-top:10px;
+  text-align:center;
+  font-size:10.5pt;
+  color:#222;
+  line-height:1.35;
+}
+#certStamp{
+  margin-top:14px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-end;
+  flex-wrap:wrap;
+}
+.sig{
+  width:320px;
+  border-top:2px solid rgba(0,0,0,.55);
+  padding-top:6px;
+  font-size:10pt;
+  text-align:center;
+}
+#certBtns{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.certBtn{
+  border:2px solid rgba(0,0,0,.6);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:900;
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     ENTRADA
+========================================================= -->
+<div class="overlay" id="startOverlay">
+  <div class="modal">
+    <h2>🏫 Projeto de Vida (AEE) — Aula 9 Premium</h2>
+    <p class="sub">
+      Tema: <b>Persistência, esforço e responsabilidade acadêmica</b> • Duração: <b>45 min</b><br>
+      ✅ Aqui você aprende estratégias para <b>não desistir</b>, <b>cumprir prazos</b> e <b>evoluir na escola</b> — sem passar vergonha.
+    </p>
+
+    <div class="formGrid">
+      <div>
+        <div class="small"><b>Nome do aluno(a)</b></div>
+        <input id="inName" type="text" placeholder="Ex.: Maria Silva" />
+      </div>
+      <div>
+        <div class="small"><b>Turma</b></div>
+        <input id="inClass" type="text" placeholder="Ex.: 2ª Série A" />
+      </div>
+      <div style="grid-column:1/-1;">
+        <div class="small"><b>Escola</b></div>
+        <input id="inSchool" type="text" placeholder="Ex.: Escola Estadual ___" />
+      </div>
+    </div>
+
+    <div class="modalActions">
+      <button class="bigBtn" onclick="demoFill()">Preencher exemplo</button>
+      <button class="bigBtn primary" id="btnEnter" onclick="enterLesson()" disabled>Entrar na aula</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="wrap">
+
+  <!-- TOP BAR -->
+  <div class="topBar">
+    <div class="row">
+      <div class="row" style="justify-content:flex-start;">
+        <span class="pill">👤 Aluno: <span id="uiName">—</span></span>
+        <span class="pill">🏫 Turma: <span id="uiClass">—</span></span>
+        <span class="pill">📍 Escola: <span id="uiSchool">—</span></span>
+      </div>
+      <div class="row" style="justify-content:flex-end;">
+        <span class="pill">📈 Progresso: <b><span id="uiProg">0%</span></b></span>
+        <div class="progressBar"><div class="progressFill" id="progFill"></div></div>
+        <button class="ctrlBtn" onclick="speakPT(narrations.global)">🔊 Narrador</button>
+        <button class="ctrlBtn" id="btnCert" onclick="openCert()" disabled>🏅 Certificado</button>
+      </div>
+    </div>
+    <div class="small" style="margin-top:6px; text-align:center;">
+      Faça as atividades e clique em <b>✅ Conferir</b> para liberar o <b>OK</b>.
+    </div>
+  </div>
+
+  <!-- =====================================================
+       PÁGINA 1 — A1, A2, A3
+  ====================================================== -->
+  <section class="page" aria-label="Página 1">
+    <div class="content">
+      <div class="header">
+        <div></div>
+        <div class="centerTitle">PROJETO DE VIDA (AEE) • AULA 9 • PÁGINA 1</div>
+        <div class="bncc">BNCC: CG6, CG8</div>
+      </div>
+      <div class="bars"><div class="bar"></div><div></div><div class="bar alt"></div></div>
+
+      <div class="banner">
+        <h3 class="bannerTitle">🔥 Persistir não é “força bruta” — é estratégia</h3>
+        <p class="bannerSub">
+          Persistência é continuar mesmo com dificuldade, mas com um plano: dividir tarefa, começar pequeno e cumprir prazos.
+          Responsabilidade acadêmica é <b>assumir</b> o estudo e a entrega das atividades.
+        </p>
+        <div class="badgeRow">
+          <span class="badge">🧱 Passos pequenos</span>
+          <span class="badge">⏱️ Prazo</span>
+          <span class="badge">✅ Constância</span>
+        </div>
+      </div>
+
+      <div class="cols">
+
+        <!-- A1 -->
+        <div class="card violet">
+          <h4 class="cardTitle">🎯 Atividade 1 — Minha “força de persistência”</h4>
+          <p class="hint">Marque <b>4</b> atitudes que te ajudam a continuar. Depois escreva 1 frase curta.</p>
+
+          <div class="checkGrid" id="persistChecks"></div>
+
+          <div class="small" style="margin-top:8px;"><b>Minha frase:</b></div>
+          <input id="a1line" type="text" placeholder="Ex.: Eu persisto quando eu começo pequeno e continuo todo dia." />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a1)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA1()">✅ Conferir</button>
+            <span class="okBadge" id="a1ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a1msg">Para concluir: marque <b>4</b> itens e escreva a frase.</div>
+        </div>
+
+        <!-- A2 -->
+        <div class="card green">
+          <h4 class="cardTitle">📌 Atividade 2 — Plano “3 passos” (anti-desistência)</h4>
+          <p class="hint">Escolha uma tarefa da escola e quebre em <b>3 passos simples</b>.</p>
+
+          <div class="small"><b>Tarefa:</b></div>
+          <input id="task" type="text" placeholder="Ex.: fazer um resumo / estudar matemática / trabalho de história..." />
+
+          <div class="small" style="margin-top:8px;"><b>3 passos:</b></div>
+          <input id="s1" type="text" placeholder="Passo 1 (bem pequeno)" />
+          <div style="height:6px;"></div>
+          <input id="s2" type="text" placeholder="Passo 2" />
+          <div style="height:6px;"></div>
+          <input id="s3" type="text" placeholder="Passo 3" />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a2)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA2()">✅ Conferir</button>
+            <span class="okBadge" id="a2ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a2msg">Para concluir: escreva a tarefa e os 3 passos.</div>
+        </div>
+
+      </div>
+
+      <div class="cols" style="margin-top:10px;">
+
+        <!-- A3 -->
+        <div class="card orange">
+          <h4 class="cardTitle">⏱️ Atividade 3 — Responsabilidade acadêmica (prazo real)</h4>
+          <p class="hint">Complete: <b>o que</b> vou entregar, <b>quando</b>, e <b>como</b> vou lembrar.</p>
+
+          <input id="what" type="text" placeholder="O que vou entregar? (Ex.: atividade de geografia)" />
+          <div style="height:6px;"></div>
+          <input id="when" type="text" placeholder="Quando? (Ex.: amanhã / sexta / dia 20)" />
+          <div style="height:6px;"></div>
+          <input id="how" type="text" placeholder="Como vou lembrar? (Ex.: alarme + caderno + pedir aviso)" />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a3)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA3()">✅ Conferir</button>
+            <span class="okBadge" id="a3ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a3msg">Para concluir: preencha os 3 campos.</div>
+        </div>
+
+        <!-- extra card preenchendo espaço com dica premium -->
+        <div class="card blue">
+          <h4 class="cardTitle">💡 Dica premium — “Começar é ganhar metade”</h4>
+          <p class="hint">
+            Quando você começa <b>pequeno</b>, o cérebro entra no ritmo.  
+            Ex.: “vou estudar só 5 minutos”. Geralmente vira 10, 15…
+          </p>
+          <div class="cards">
+            <div class="cardMini">
+              <div class="miniTop">
+                <div class="miniTxt">🚀 Meu “começo pequeno” para hoje:</div>
+              </div>
+              <input id="miniStart" type="text" placeholder="Ex.: abrir o caderno e fazer 2 questões." />
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.tip)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkTip()">✅ Conferir</button>
+            <span class="okBadge" id="tipok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="tipmsg">Para concluir: escreva seu “começo pequeno”.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PÁGINA 2 — A4 (SOPA), A5
+  ====================================================== -->
+  <section class="page" aria-label="Página 2">
+    <div class="content">
+      <div class="header">
+        <div></div>
+        <div class="centerTitle">PROJETO DE VIDA (AEE) • AULA 9 • PÁGINA 2</div>
+        <div class="bncc">BNCC: CG10, CG2</div>
+      </div>
+      <div class="bars"><div class="bar alt"></div><div></div><div class="bar"></div></div>
+
+      <div class="banner" style="background: linear-gradient(90deg, rgba(46,204,113,.12), rgba(243,156,18,.14));">
+        <h3 class="bannerTitle">🧩 Persistência na prática</h3>
+        <p class="bannerSub">
+          Persistência é repetir o esforço, mas com inteligência. Agora vamos treinar palavras-chave e atitudes.
+        </p>
+        <div class="badgeRow">
+          <span class="badge">🔁 Repetir</span>
+          <span class="badge">🧠 Estratégia</span>
+          <span class="badge">✅ Finalizar</span>
+        </div>
+      </div>
+
+      <div class="cols">
+
+        <!-- A4 — SOPA DE LETRAS -->
+        <div class="card green">
+          <h4 class="cardTitle">🔎 Atividade 4 — Sopa de letras (persistência)</h4>
+          <p class="hint">
+            Clique nas letras para formar palavras. Quando montar uma palavra da lista, ela fica <b>verde</b>.
+            (Pode fazer por tentativa, sem vergonha.)
+          </p>
+
+          <div class="wsWrap">
+            <div class="small"><b>Regras:</b> clique nas letras para selecionar • clique em <b>Confirmar</b> • <b>Limpar</b> se errar.</div>
+            <div class="wsGrid" id="wsGrid"></div>
+
+            <div class="controls" style="margin-top:10px;">
+              <button class="ctrlBtn" onclick="wsConfirm()">✅ Confirmar palavra</button>
+              <button class="ctrlBtn" onclick="wsClear()">🧽 Limpar seleção</button>
+              <button class="ctrlBtn" onclick="speakPT(narrations.a4)">🔊 Ouvir</button>
+            </div>
+
+            <div class="small" style="margin-top:10px;"><b>Palavras para encontrar:</b></div>
+            <div class="wsList" id="wsList"></div>
+          </div>
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="checkA4()">✅ Conferir</button>
+            <span class="okBadge" id="a4ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a4msg">Para concluir: encontre <b>pelo menos 6</b> palavras da lista.</div>
+        </div>
+
+        <!-- A5 -->
+        <div class="card violet">
+          <h4 class="cardTitle">🗣️ Atividade 5 — Troca de pensamento (anti-desistência)</h4>
+          <p class="hint">
+            Selecione uma frase que aparece na mente e transforme em uma frase que te ajuda a continuar.
+          </p>
+
+          <div class="small"><b>Frase que atrapalha:</b></div>
+          <select id="badTalk">
+            <option value="">Escolha…</option>
+            <option>“Eu sou ruim nisso.”</option>
+            <option>“Se eu errar, acabou.”</option>
+            <option>“Isso é difícil demais.”</option>
+            <option>“Eu nunca vou conseguir.”</option>
+            <option>“Não adianta tentar.”</option>
+          </select>
+
+          <div class="small" style="margin-top:8px;"><b>Minha frase que ajuda:</b></div>
+          <input id="goodTalk" type="text" placeholder="Ex.: Eu melhoro com treino e ajuda." />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a5)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA5()">✅ Conferir</button>
+            <span class="okBadge" id="a5ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a5msg">Para concluir: escolha uma frase e escreva a versão que ajuda.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       PÁGINA 3 — A6, A7, A8 + CERTIFICADO
+  ====================================================== -->
+  <section class="page" aria-label="Página 3">
+    <div class="content">
+      <div class="header">
+        <div></div>
+        <div class="centerTitle">PROJETO DE VIDA (AEE) • AULA 9 • PÁGINA 3</div>
+        <div class="bncc">BNCC: EMIFCG10, CG9</div>
+      </div>
+      <div class="bars"><div class="bar"></div><div></div><div class="bar alt"></div></div>
+
+      <div class="banner" style="background: linear-gradient(90deg, rgba(243,156,18,.12), rgba(58,160,230,.12));">
+        <h3 class="bannerTitle">🏁 Fechamento: responsabilidade acadêmica real</h3>
+        <p class="bannerSub">
+          Você vai escolher hábitos, montar uma regra simples e fechar com compromisso de uma semana.
+          Quando tudo estiver <b>OK</b>, o certificado libera. 🏅
+        </p>
+        <div class="badgeRow">
+          <span class="badge">✅ Compromisso</span>
+          <span class="badge">📌 Hábito</span>
+          <span class="badge">🔁 Persistência</span>
+        </div>
+      </div>
+
+      <div class="cols">
+
+        <!-- A6 -->
+        <div class="card orange">
+          <h4 class="cardTitle">📌 Atividade 6 — Hábitos do aluno responsável (pílulas)</h4>
+          <p class="hint">Clique em <b>4 hábitos</b> que você quer praticar na escola.</p>
+
+          <div class="pillGrid" id="habitsGrid"></div>
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a6)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA6()">✅ Conferir</button>
+            <span class="okBadge" id="a6ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a6msg">Para concluir: selecione <b>4</b> hábitos.</div>
+        </div>
+
+        <!-- A7 -->
+        <div class="card blue">
+          <h4 class="cardTitle">🧠 Atividade 7 — Regra simples para não atrasar</h4>
+          <p class="hint">Complete a regra: se acontecer X, eu faço Y. (bem simples)</p>
+
+          <div class="small"><b>Se eu perceber que estou adiando…</b></div>
+          <input id="ifLine" type="text" placeholder="Ex.: se eu estiver adiando, eu começo por 5 minutos." />
+
+          <div class="small" style="margin-top:8px;"><b>Então eu vou…</b></div>
+          <input id="thenLine" type="text" placeholder="Ex.: abrir o caderno e fazer 2 questões." />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a7)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA7()">✅ Conferir</button>
+            <span class="okBadge" id="a7ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a7msg">Para concluir: preencha os 2 campos.</div>
+        </div>
+
+      </div>
+
+      <div class="cols" style="margin-top:10px;">
+
+        <!-- A8 -->
+        <div class="card green">
+          <h4 class="cardTitle">✅ Atividade 8 — Meu compromisso de 7 dias</h4>
+          <p class="hint">Monte um compromisso real: dia/horário, o que fazer e como provar pra você mesmo.</p>
+
+          <input id="cDay" type="text" placeholder="Dia/horário (Ex.: seg–qui 19h)" />
+          <div style="height:6px;"></div>
+          <input id="cDo" type="text" placeholder="O que vou fazer (Ex.: 20 min + 5 exercícios)" />
+          <div style="height:6px;"></div>
+          <input id="cProof" type="text" placeholder="Como vou provar (Ex.: checklist no caderno / foto / marcar no calendário)" />
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a8)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="checkA8()">✅ Conferir</button>
+            <span class="okBadge" id="a8ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a8msg">Para concluir: preencha os 3 campos.</div>
+        </div>
+
+        <!-- A9 + CERT -->
+        <div class="card violet">
+          <h4 class="cardTitle">🐍 Atividade 9 — Minigame Final Falange Ultra</h4>
+          <p class="hint">
+            Agora a missão ficou mais premium: a <b>cobrinha</b> só pode comer palavras <b>boas</b>.
+            Se encostar em palavra <b>ruim</b>, na parede ou no próprio corpo, <b>morre na hora</b> e reinicia.
+            Meta: <b>50 pontos</b>.
+          </p>
+
+          <canvas id="snakeCanvas" width="420" height="420" aria-label="Minigame da cobrinha premium"></canvas>
+
+          <div class="snakeMiniLegend">
+            <span class="snakeTag good">🟢 Comer: Persistência, Foco, Meta...</span>
+            <span class="snakeTag bad">🔴 Morte: Preguiça, Atraso, Desistir...</span>
+          </div>
+
+          <div class="gameHud">
+            <div class="gameStat">⭐ Pontos<br><span id="snakeScore">0</span></div>
+            <div class="gameStat">🎯 Meta<br><span id="snakeTarget">50</span></div>
+            <div class="gameStat">🏁 Estado<br><span id="snakeLives">Vivo</span></div>
+            <div class="gameStat">🐍 Tamanho<br><span id="snakeSize">3</span></div>
+          </div>
+
+          <div id="snakeStatus">Pronto para jogar.</div>
+
+          <div class="gameMobilePad" aria-label="Controles da cobrinha para celular">
+            <div class="gamePadCol"></div>
+            <div class="gamePadCol">
+              <button class="gameTouchBtn" id="btnSnakeUp" type="button">⬆️</button>
+            </div>
+            <div class="gamePadCol"></div>
+
+            <div class="gamePadCol">
+              <button class="gameTouchBtn" id="btnSnakeLeft" type="button">⬅️</button>
+            </div>
+            <div class="gamePadCol gamePadStack">
+              <button class="gameTouchBtn primary" id="btnSnakeStart" type="button">▶️ JOGAR</button>
+              <button class="gameTouchBtn" id="btnSnakeDown" type="button">⬇️</button>
+            </div>
+            <div class="gamePadCol">
+              <button class="gameTouchBtn" id="btnSnakeRight" type="button">➡️</button>
+            </div>
+          </div>
+
+          <div class="gameLegend">Teclado, toque nos botões ou deslize no tabuleiro no celular. Palavra ruim = morte instantânea.</div>
+
+          <div class="controls">
+            <button class="ctrlBtn" onclick="speakPT(narrations.a9)">🔊 Ouvir</button>
+            <button class="ctrlBtn" onclick="startSnakeGame()">▶️ Jogar</button>
+            <button class="ctrlBtn" onclick="restartSnakeGame()">🔁 Reiniciar</button>
+            <button class="ctrlBtn" onclick="checkSnakeWin()">✅ Conferir</button>
+            <span class="okBadge" id="a9ok">OK — concluído</span>
+          </div>
+
+          <div class="warn" id="a9msg" style="display:block;">
+            Faça <b>50 pontos</b>. Palavra boa = <b>+5</b>. Palavra ruim = <b>morte instantânea</b>. Parede ou próprio corpo também derrubam a cobrinha.
+          </div>
+
+          <div class="warn" id="certHint" style="display:block; margin-top:10px;">
+            🔒 Certificado bloqueado: conclua todas as atividades, incluindo a cobrinha.
+          </div>
+
+          <div class="controls" style="margin-top:8px;">
+            <button class="ctrlBtn" onclick="scrollToTop()">⬆️ Voltar</button>
+            <button class="ctrlBtn" id="btnCert2" onclick="openCert()" disabled>🏅 Abrir certificado</button>
+            <button class="ctrlBtn" onclick="speakPT('Parabéns! Você praticou persistência, esforço e responsabilidade acadêmica. Continue com passos pequenos, todo dia.')">🔊 Mensagem</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- /wrap -->
+
+<!-- =========================================================
+     CERTIFICADO
+========================================================= -->
+<div class="overlay" id="certOverlay">
+  <div id="certCard">
+    <div id="certInner">
+      <div id="certTitle">🏅 Certificado de Conclusão</div>
+      <div id="certSub">Projeto de Vida (AEE) — Aula 9: Persistência, Esforço e Responsabilidade Acadêmica</div>
+
+      <div id="certName">Aluno(a): <span id="certStudent">—</span></div>
+
+      <div id="certMeta">
+        Turma: <b><span id="certClass">—</span></b> &nbsp;•&nbsp;
+        Escola: <b><span id="certSchool">—</span></b><br>
+        Concluiu todas as atividades interativas da Aula 9 (45 min).<br>
+        Data: <b><span id="certDate">—</span></b>
+      </div>
+
+      <div id="certStamp">
+        <div class="sig">Professor(a) / Responsável</div>
+        <div class="sig">Coordenação</div>
+      </div>
+
+      <div id="certBtns">
+        <button class="certBtn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+        <button class="certBtn" onclick="closeCert()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   ESTADO
+========================================================= */
+const state = {
+  student:{ name:"", turma:"", escola:"" },
+  done:{ a1:false, a2:false, a3:false, tip:false, a4:false, a5:false, a6:false, a7:false, a8:false, a9:false }
+};
+
+/* =========================================================
+   NARRAÇÕES (premium)
+========================================================= */
+const narrations = {
+  global:
+    "Olá! Esta é a aula 9. Hoje o tema é persistência, esforço e responsabilidade acadêmica. Você vai aprender a dividir tarefas, cumprir prazos e usar estratégias para não desistir. Faça com calma. Não é prova.",
+  a1:
+    "Atividade 1: marque quatro atitudes que te ajudam a persistir e escreva uma frase curta.",
+  a2:
+    "Atividade 2: escolha uma tarefa e quebre em três passos bem pequenos. Isso reduz a vontade de desistir.",
+  a3:
+    "Atividade 3: escreva o que vai entregar, quando e como vai lembrar. Isso é responsabilidade acadêmica.",
+  tip:
+    "Dica premium: começar pequeno faz o cérebro entrar no ritmo. Escreva seu começo pequeno para hoje.",
+  a4:
+    "Atividade 4: sopa de letras. Clique nas letras para formar uma palavra da lista e confirme.",
+  a5:
+    "Atividade 5: escolha uma frase que atrapalha e escreva uma frase que ajuda a continuar.",
+  a6:
+    "Atividade 6: escolha quatro hábitos de um aluno responsável.",
+  a7:
+    "Atividade 7: complete a regra. Se eu estiver adiando, então eu vou começar por um passo pequeno.",
+  a8:
+    "Atividade 8: monte um compromisso de sete dias. Dia e horário, o que fazer e como comprovar para você mesmo.",
+  a9:
+    "Atividade 9: minigame da cobrinha ultra. Coma somente as palavras boas para crescer e marcar pontos. Se tocar nas palavras ruins, na parede ou no próprio corpo, a cobrinha morre e reinicia. Faça cinquenta pontos para concluir."
+};
+
+/* =========================================================
+   ENTRADA
+========================================================= */
+const inName   = document.getElementById("inName");
+const inClass  = document.getElementById("inClass");
+const inSchool = document.getElementById("inSchool");
+const btnEnter = document.getElementById("btnEnter");
+
+[inName,inClass,inSchool].forEach(el=>{
+  el.addEventListener("input", ()=>{
+    btnEnter.disabled = !(inName.value.trim() && inClass.value.trim() && inSchool.value.trim());
+  });
+});
+function demoFill(){
+  inName.value = "Aluno(a) Exemplo";
+  inClass.value = "2ª Série A";
+  inSchool.value = "Escola Estadual Exemplo";
+  btnEnter.disabled = false;
+}
+function enterLesson(){
+  state.student.name   = inName.value.trim();
+  state.student.turma  = inClass.value.trim();
+  state.student.escola = inSchool.value.trim();
+
+  document.getElementById("uiName").textContent = state.student.name;
+  document.getElementById("uiClass").textContent = state.student.turma;
+  document.getElementById("uiSchool").textContent = state.student.escola;
+
+  document.getElementById("startOverlay").style.display = "none";
+  document.getElementById("wrap").style.display = "flex";
+  speakPT(narrations.global);
+}
+
+/* =========================================================
+   NARRADOR
+========================================================= */
+function speakPT(text){
+  try{
+    if(!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "pt-BR";
+    u.rate = 0.95;
+    u.pitch = 1.0;
+    window.speechSynthesis.speak(u);
+  }catch(e){ console.log(e); }
+}
+
+/* =========================================================
+   A1 — CHECKS
+========================================================= */
+const PERSIST = [
+  "📌 Começar pequeno",
+  "⏱️ Estudar em bloco curto",
+  "🧱 Dividir tarefa em passos",
+  "✅ Fazer checklist",
+  "📅 Anotar prazo",
+  "📵 Reduzir distração",
+  "🗣️ Pedir ajuda quando travar",
+  "🔁 Revisar um pouco todo dia"
+];
+
+(function buildPersist(){
+  const box = document.getElementById("persistChecks");
+  box.innerHTML = PERSIST.map((t,i)=>`
+    <div class="checkItem">
+      <input id="pc_${i}" type="checkbox">
+      <label for="pc_${i}" class="small"><b>${t}</b></label>
+    </div>
+  `).join("");
+})();
+
+function countChecked(prefix, n){
+  let c=0;
+  for(let i=0;i<n;i++){
+    const el = document.getElementById(prefix+i);
+    if(el && el.checked) c++;
+  }
+  return c;
+}
+
+/* =========================================================
+   TIP (começo pequeno)
+========================================================= */
+function checkTip(){
+  const v = document.getElementById("miniStart").value.trim();
+  setOk("tip", "tipok", "tipmsg", (v.length>=2));
+}
+
+/* =========================================================
+   A6 — HÁBITOS (4)
+========================================================= */
+const HABITS = [
+  "📌 Anotar tarefas e prazos",
+  "✅ Entregar no prazo",
+  "📝 Fazer o mínimo todo dia",
+  "📵 Celular longe na hora de estudar",
+  "🧩 Pedir explicação quando não entende",
+  "🔁 Revisar antes da prova",
+  "📚 Levar material",
+  "⏱️ Chegar no horário"
+];
+
+(function buildHabits(){
+  const box = document.getElementById("habitsGrid");
+  box.innerHTML = HABITS.map((t,i)=>`<div class="togglePill" onclick="togglePill(this,4)">${t}</div>`).join("");
+})();
+
+function togglePill(el, max){
+  el.classList.toggle("on");
+  const on = el.parentElement.querySelectorAll(".togglePill.on");
+  if(on.length > max){
+    el.classList.remove("on");
+  }
+}
+
+/* =========================================================
+   SOPA DE LETRAS — dados
+========================================================= */
+const WS_WORDS = [
+  "PERSISTENCIA",
+  "ESFORCO",
+  "RESPONSABILIDADE",
+  "FOCO",
+  "PRAZO",
+  "ROTINA",
+  "META",
+  "DISCIPLINA"
+];
+
+/* Grade fixa 12x12 (fácil e rápido) */
+const WS_GRID = [
+  "PERSISTENCIA",
+  "QWERTYUIOPAS",
+  "ESFORCOZXCVA",
+  "LKJHGFDPRAZO",
+  "ROTINAMNBVCS",
+  "METAQAZWSXED",
+  "FOCOCRFVGTBH",
+  "DISCIPLINAJK",
+  "POIUYTREWQAZ",
+  "RESPONSABIL",
+  "IDADEASDFGHJ",
+  "ZXCVBNMLKJHG"
+].map(r=>r.slice(0,12));
+
+let wsSelected = []; // {r,c,el,letter}
+
+/* montar sopa */
+(function buildWS(){
+  const grid = document.getElementById("wsGrid");
+  grid.innerHTML = "";
+  for(let r=0;r<12;r++){
+    for(let c=0;c<12;c++){
+      const ch = WS_GRID[r][c] || "A";
+      const d = document.createElement("div");
+      d.className = "wsCell";
+      d.textContent = ch;
+      d.dataset.r = r;
+      d.dataset.c = c;
+      d.addEventListener("click", ()=>wsPick(d));
+      grid.appendChild(d);
+    }
+  }
+
+  const list = document.getElementById("wsList");
+  list.innerHTML = WS_WORDS.map(w=>`<div class="wordTag" id="tag_${w}">🔎 ${w}</div>`).join("");
+})();
+
+function wsPick(cell){
+  if(cell.classList.contains("hit")) return;
+
+  // toggle seleção
+  const already = wsSelected.find(x=>x.el===cell);
+  if(already){
+    cell.classList.remove("sel");
+    wsSelected = wsSelected.filter(x=>x.el!==cell);
+    return;
+  }
+  cell.classList.add("sel");
+  wsSelected.push({
+    el: cell,
+    letter: cell.textContent
+  });
+}
+
+function wsClear(){
+  wsSelected.forEach(x=>x.el.classList.remove("sel"));
+  wsSelected = [];
+}
+
+const wsFound = new Set();
+
+function wsConfirm(){
+  const word = wsSelected.map(x=>x.letter).join("").toUpperCase();
+  const rev  = word.split("").reverse().join("");
+
+  const hit = WS_WORDS.find(w=> w===word || w===rev);
+  if(hit && !wsFound.has(hit)){
+    wsFound.add(hit);
+
+    // marca células como "hit"
+    wsSelected.forEach(x=>{
+      x.el.classList.remove("sel");
+      x.el.classList.add("hit");
+    });
+
+    // marca na lista
+    const tag = document.getElementById("tag_"+hit);
+    if(tag) tag.classList.add("found");
+
+    speakPT("Boa! Você encontrou " + hit + ".");
+  }else{
+    // se errar, só limpa seleção (sem constranger)
+    speakPT("Tudo bem. Tente outra combinação.");
+    wsSelected.forEach(x=>x.el.classList.remove("sel"));
+  }
+  wsSelected = [];
+}
+
+/* =========================================================
+   A9 — MINIGAME COBRINHA
+========================================================= */
+let snakeCanvas = null;
+let snakeCtx = null;
+let snakeLoopTimer = null;
+let snakeRunning = false;
+let snakeWon = false;
+let snakeDirection = "right";
+let snakeNextDirection = "right";
+let snakeBody = [];
+let snakeFood = null;
+let snakeScore = 0;
+let snakeAlive = false;
+let snakeTouchStart = null;
+const SNAKE_TARGET = 50;
+const SNAKE_GRID = 14;
+const SNAKE_CELL = 30;
+const SNAKE_SPEED = 145;
+let snakeFoodBornAt = 0;
+const SNAKE_WORD_LIFETIME = 5000; // 5 segundos
+const SNAKE_POSITIVE = ["Persistência","Esforço","Foco","Meta","Rotina","Prazo","Disciplina","Constância","Planejamento","Coragem"];
+const SNAKE_NEGATIVE = ["Atraso","Preguiça","Desistir","Bagunça","Pressa","Distração","Celular","Véspera","Desculpa","Caos"];
+
+function ensureSnake(){
+  if(snakeCanvas) return;
+  snakeCanvas = document.getElementById("snakeCanvas");
+  if(!snakeCanvas) return;
+  snakeCtx = snakeCanvas.getContext("2d");
+  document.getElementById("snakeTarget").textContent = String(SNAKE_TARGET);
+  document.addEventListener("keydown", onSnakeKeyDown, {passive:false});
+  bindSnakeTouch();
+  bindSnakeSwipe();
+  updateSnakeHud();
+  drawSnakeStart();
+}
+
+function bindSnakeTouch(){
+  const bind = (id, dir)=>{
+    const el = document.getElementById(id);
+    if(!el || el.dataset.bound === "1") return;
+    const fn = (e)=>{
+      if(e) e.preventDefault();
+      if(id === 'btnSnakeStart'){ startSnakeGame(); return; }
+      if(dir) setSnakeDirection(dir);
+    };
+    ["click","pointerdown","touchstart"].forEach(evt=> el.addEventListener(evt, fn, {passive:false}));
+    el.dataset.bound = "1";
+  };
+  bind('btnSnakeUp','up');
+  bind('btnSnakeDown','down');
+  bind('btnSnakeLeft','left');
+  bind('btnSnakeRight','right');
+  bind('btnSnakeStart',null);
+}
+
+function bindSnakeSwipe(){
+  if(!snakeCanvas || snakeCanvas.dataset.swipeBound === "1") return;
+  snakeCanvas.addEventListener('touchstart', (e)=>{
+    if(!e.touches || !e.touches[0]) return;
+    const t = e.touches[0];
+    snakeTouchStart = { x:t.clientX, y:t.clientY };
+  }, {passive:true});
+  snakeCanvas.addEventListener('touchend', (e)=>{
+    if(!snakeTouchStart || !e.changedTouches || !e.changedTouches[0]) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - snakeTouchStart.x;
+    const dy = t.clientY - snakeTouchStart.y;
+    const ax = Math.abs(dx);
+    const ay = Math.abs(dy);
+    if(Math.max(ax, ay) < 18) return;
+    if(ax > ay){
+      setSnakeDirection(dx > 0 ? 'right' : 'left');
+    }else{
+      setSnakeDirection(dy > 0 ? 'down' : 'up');
+    }
+    snakeTouchStart = null;
+  }, {passive:true});
+  snakeCanvas.dataset.swipeBound = "1";
+}
+
+function onSnakeKeyDown(e){
+  const map = { ArrowUp:'up', ArrowDown:'down', ArrowLeft:'left', ArrowRight:'right' };
+  const dir = map[e.key];
+  if(dir){
+    e.preventDefault();
+    setSnakeDirection(dir);
+  }
+}
+
+function setSnakeDirection(dir){
+  const opposite = { up:'down', down:'up', left:'right', right:'left' };
+  if(opposite[snakeDirection] === dir) return;
+  snakeNextDirection = dir;
+}
+
+function updateSnakeHud(){
+  const scoreEl = document.getElementById('snakeScore');
+  const livesEl = document.getElementById('snakeLives');
+  const sizeEl = document.getElementById('snakeSize');
+  if(scoreEl) scoreEl.textContent = String(snakeScore);
+  if(livesEl) livesEl.textContent = snakeAlive ? 'Vivo' : 'KO';
+  if(sizeEl) sizeEl.textContent = String(snakeBody.length || 3);
+}
+
+function setSnakeStatus(msg){
+  const el = document.getElementById('snakeStatus');
+  if(el) el.innerHTML = msg;
+}
+
+function randomSnakeWordPack(){
+  const positive = Math.random() > 0.34;
+  const source = positive ? SNAKE_POSITIVE : SNAKE_NEGATIVE;
+  return { text: source[Math.floor(Math.random()*source.length)], positive };
+}
+
+function resetSnakeState(){
+  snakeDirection = 'right';
+  snakeNextDirection = 'right';
+  snakeBody = [{x:3,y:7},{x:2,y:7},{x:1,y:7}];
+  snakeScore = 0;
+  snakeWon = false;
+  snakeAlive = true;
+  state.done.a9 = false;
+  document.getElementById('a9ok').style.display = 'none';
+  spawnSnakeFood();
+  updateSnakeHud();
+}
+
+function spawnSnakeFood(){
+  let placed = false;
+  let safety = 0;
+  while(!placed && safety < 500){
+    safety++;
+    const pack = randomSnakeWordPack();
+    const x = Math.floor(Math.random()*SNAKE_GRID);
+    const y = Math.floor(Math.random()*SNAKE_GRID);
+    const busy = snakeBody.some(p=>p.x===x && p.y===y);
+    if(!busy){
+      snakeFood = { x, y, text: pack.text, positive: pack.positive };
+      snakeFoodBornAt = Date.now(); // marca o momento em que a palavra apareceu
+      placed = true;
+    }
+  }
+}
+
+function startSnakeGame(){
+  ensureSnake();
+  if(!snakeCanvas || !snakeCtx) return;
+  restartSnakeGame();
+}
+
+function restartSnakeGame(){
+  ensureSnake();
+  if(snakeLoopTimer){ clearInterval(snakeLoopTimer); snakeLoopTimer = null; }
+  resetSnakeState();
+  snakeRunning = true;
+  setSnakeStatus('🎮 Cobrinha iniciada! Coma só as palavras boas.');
+  document.getElementById('a9msg').style.display = 'block';
+  document.getElementById('a9msg').innerHTML = 'Faça <b>50 pontos</b>. Palavra boa = <b>+5</b>. Palavra ruim = <b>morte instantânea</b>.';
+  drawSnake();
+  snakeLoopTimer = setInterval(stepSnake, SNAKE_SPEED);
+}
+
+function stepSnake(){
+  snakeDirection = snakeNextDirection;
+  // se a palavra ficar 5 segundos sem ser comida, troca automaticamente
+  if (snakeFood && (Date.now() - snakeFoodBornAt >= SNAKE_WORD_LIFETIME)) {
+    spawnSnakeFood();
+    setSnakeStatus('⌛ O tempo da palavra acabou. Nova palavra apareceu.');
+  }
+  const head = { ...snakeBody[0] };
+  if(snakeDirection === 'up') head.y -= 1;
+  if(snakeDirection === 'down') head.y += 1;
+  if(snakeDirection === 'left') head.x -= 1;
+  if(snakeDirection === 'right') head.x += 1;
+
+  const hitWall = head.x < 0 || head.x >= SNAKE_GRID || head.y < 0 || head.y >= SNAKE_GRID;
+  const hitSelf = snakeBody.some(seg=>seg.x===head.x && seg.y===head.y);
+  if(hitWall || hitSelf){
+    snakeDie(hitWall ? '💥 A cobrinha bateu na parede.' : '💥 A cobrinha bateu no próprio corpo.');
+    return;
+  }
+
+  snakeBody.unshift(head);
+  let ate = false;
+
+  if(snakeFood && head.x === snakeFood.x && head.y === snakeFood.y){
+    ate = true;
+    if(snakeFood.positive){
+      snakeScore += 5;
+      setSnakeStatus(`✅ Boa! "${snakeFood.text}" vale +5.`);
+      beep(820,0.05,'triangle',0.03);
+      if(snakeScore >= SNAKE_TARGET){
+        snakeWon = true;
+        snakeRunning = false;
+        snakeAlive = true;
+        if(snakeLoopTimer){ clearInterval(snakeLoopTimer); snakeLoopTimer = null; }
+        setOk('a9','a9ok','a9msg',true);
+        setSnakeStatus('🏆 Vitória! Você bateu 50 pontos na cobrinha.');
+        updateSnakeHud();
+        drawSnake();
+        return;
+      }
+      spawnSnakeFood();
+    }else{
+      snakeScore = Math.max(0, snakeScore - 5);
+      updateSnakeHud();
+      snakeDie(`☠️ "${snakeFood.text}" era palavra ruim. A cobrinha morreu.`);
+      return;
+    }
+  }
+
+  if(!ate) snakeBody.pop();
+  updateSnakeHud();
+  drawSnake();
+}
+
+function snakeDie(message){
+  snakeRunning = false;
+  snakeAlive = false;
+  if(snakeLoopTimer){ clearInterval(snakeLoopTimer); snakeLoopTimer = null; }
+  beep(180,0.08,'sawtooth',0.03);
+  setSnakeStatus(message + ' Reiniciando...');
+  drawSnake(true);
+  setTimeout(()=> restartSnakeGame(), 1200);
+}
+
+function drawSnakeStart(){
+  if(!snakeCtx || !snakeCanvas) return;
+  snakeCtx.clearRect(0,0,snakeCanvas.width,snakeCanvas.height);
+  drawSnakeBoard();
+  snakeCtx.fillStyle = 'rgba(255,255,255,.05)';
+  for(let y=0;y<snakeCanvas.height;y+=10){
+    snakeCtx.fillRect(0,y,snakeCanvas.width,1);
+  }
+  snakeCtx.fillStyle = 'rgba(255,255,255,.96)';
+  snakeCtx.textAlign = 'center';
+  snakeCtx.font = 'bold 22px Arial';
+  snakeCtx.fillText('COBRINHA FINAL FALANGE', snakeCanvas.width/2, 92);
+  snakeCtx.font = 'bold 15px Arial';
+  snakeCtx.fillText('Coma palavras boas e fuja das ruins', snakeCanvas.width/2, 132);
+  snakeCtx.fillText('Meta: 50 pontos | Palavra ruim = morte', snakeCanvas.width/2, 160);
+  snakeCtx.fillText('Use botões, teclado ou deslize no celular', snakeCanvas.width/2, 188);
+  snakeCtx.textAlign = 'start';
+}
+
+function drawSnakeBoard(){
+  snakeCtx.clearRect(0,0,snakeCanvas.width,snakeCanvas.height);
+  snakeCtx.fillStyle = '#081522';
+  snakeCtx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
+
+  const grad = snakeCtx.createRadialGradient(210,210,20,210,210,260);
+  grad.addColorStop(0,'rgba(58,160,230,.10)');
+  grad.addColorStop(1,'rgba(0,0,0,0)');
+  snakeCtx.fillStyle = grad;
+  snakeCtx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
+
+  for(let y=0; y<SNAKE_GRID; y++){
+    for(let x=0; x<SNAKE_GRID; x++){
+      snakeCtx.fillStyle = (x+y)%2===0 ? 'rgba(255,255,255,.035)' : 'rgba(255,255,255,.06)';
+      snakeCtx.fillRect(x*SNAKE_CELL, y*SNAKE_CELL, SNAKE_CELL-1, SNAKE_CELL-1);
+    }
+  }
+
+  snakeCtx.strokeStyle = 'rgba(255,255,255,.10)';
+  snakeCtx.lineWidth = 2;
+  snakeCtx.strokeRect(2,2,snakeCanvas.width-4,snakeCanvas.height-4);
+}
+
+
+function roundedPath(ctx, x, y, w, h, r){
+  const rr = Math.min(r, w/2, h/2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.lineTo(x + w - rr, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
+  ctx.lineTo(x + w, y + h - rr);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
+  ctx.lineTo(x + rr, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+  ctx.lineTo(x, y + rr);
+  ctx.quadraticCurveTo(x, y, x + rr, y);
+  ctx.closePath();
+}
+
+function drawRoundedCell(x,y,size,color,glow=0){
+  const px = x*SNAKE_CELL + 3;
+  const py = y*SNAKE_CELL + 3;
+  const s = SNAKE_CELL - 6;
+  if(glow){
+    snakeCtx.shadowColor = color;
+    snakeCtx.shadowBlur = glow;
+  }
+  snakeCtx.fillStyle = color;
+  roundedPath(snakeCtx, px, py, s, s, 8);
+  snakeCtx.fill();
+  snakeCtx.shadowBlur = 0;
+}
+
+function drawSnake(dead=false){
+  if(!snakeCtx || !snakeCanvas) return;
+  drawSnakeBoard();
+
+  if(snakeFood){
+    const cellX = snakeFood.x*SNAKE_CELL + 3;
+    const cellY = snakeFood.y*SNAKE_CELL + 3;
+    const cellS = SNAKE_CELL - 6;
+
+    snakeCtx.shadowColor = snakeFood.positive ? 'rgba(124,255,178,.95)' : 'rgba(255,139,127,.95)';
+    snakeCtx.shadowBlur = 16;
+    snakeCtx.fillStyle = snakeFood.positive ? 'rgba(124,255,178,.98)' : 'rgba(255,139,127,.98)';
+    roundedPath(snakeCtx, cellX, cellY, cellS, cellS, 8);
+    snakeCtx.fill();
+    snakeCtx.shadowBlur = 0;
+
+    snakeCtx.fillStyle = '#0b1420';
+    snakeCtx.font = 'bold 16px Arial';
+    snakeCtx.textAlign = 'center';
+    snakeCtx.fillText(snakeFood.positive ? '+' : '×', cellX + cellS/2, cellY + 19);
+    snakeCtx.textAlign = 'start';
+  }
+
+  snakeBody.forEach((seg, i)=>{
+    if(i===0){
+      drawRoundedCell(seg.x, seg.y, SNAKE_CELL, dead ? '#ff8b7f' : '#ffd08a', 10);
+      const px = seg.x*SNAKE_CELL + 3;
+      const py = seg.y*SNAKE_CELL + 3;
+      snakeCtx.fillStyle = '#111';
+      snakeCtx.beginPath(); snakeCtx.arc(px+9, py+10, 2.2, 0, Math.PI*2); snakeCtx.fill();
+      snakeCtx.beginPath(); snakeCtx.arc(px+17, py+10, 2.2, 0, Math.PI*2); snakeCtx.fill();
+    }else{
+      drawRoundedCell(seg.x, seg.y, SNAKE_CELL, dead ? '#f8b2aa' : '#64d2ff', 6);
+    }
+  });
+
+  snakeCtx.fillStyle = 'rgba(255,255,255,.95)';
+  snakeCtx.font = 'bold 13px Arial';
+  snakeCtx.fillText(`Pontos: ${snakeScore}`, 10, 18);
+  snakeCtx.fillText(`Meta: ${SNAKE_TARGET}`, 10, 36);
+  snakeCtx.fillText(`Tamanho: ${snakeBody.length}`, 10, 54);
+
+  if(snakeFood){
+    const label = snakeFood.positive ? `COMA: ${snakeFood.text}` : `FUJA: ${snakeFood.text}`;
+    snakeCtx.fillStyle = snakeFood.positive ? 'rgba(124,255,178,.98)' : 'rgba(255,139,127,.98)';
+    snakeCtx.font = 'bold 12px Arial';
+    snakeCtx.textAlign = 'center';
+    snakeCtx.fillText(label, snakeCanvas.width/2, snakeCanvas.height - 12);
+    snakeCtx.textAlign = 'start';
+  }
+
+  if(dead){
+    snakeCtx.fillStyle = 'rgba(0,0,0,.45)';
+    snakeCtx.fillRect(40, 170, snakeCanvas.width-80, 70);
+    snakeCtx.fillStyle = '#fff';
+    snakeCtx.textAlign = 'center';
+    snakeCtx.font = 'bold 24px Arial';
+    snakeCtx.fillText('GAME OVER', snakeCanvas.width/2, 198);
+    snakeCtx.font = 'bold 14px Arial';
+    snakeCtx.fillText('Reiniciando a cobrinha...', snakeCanvas.width/2, 223);
+    snakeCtx.textAlign = 'start';
+  }
+}
+
+function checkSnakeWin(){
+  const ok = snakeWon || snakeScore >= SNAKE_TARGET;
+  setOk('a9','a9ok','a9msg', ok);
+  if(ok){
+    setSnakeStatus('🏆 Vitória confirmada. Atividade concluída.');
+  }else{
+    document.getElementById('a9msg').style.display = 'block';
+    document.getElementById('a9msg').innerHTML = 'Você precisa alcançar <b>' + SNAKE_TARGET + '</b> pontos. Pontuação atual: <b>' + snakeScore + '</b>.';
+    setSnakeStatus('Continue jogando até bater 50 pontos.');
+  }
+}
+
+function beep(freq=440, duration=0.06, type='square', volume=0.03){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) return;
+    if(!window.__falangeAudio) window.__falangeAudio = new Ctx();
+    const ctx = window.__falangeAudio;
+    if(ctx.state === 'suspended') ctx.resume();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.value = volume;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
+  }catch(e){}
+}
+
+/* =========================================================
+   CHECKERS / OK
+========================================================= */
+function setOk(key, okId, msgId, ok){
+  document.getElementById(okId).style.display = ok ? "inline-block" : "none";
+  document.getElementById(msgId).style.display = ok ? "none" : "block";
+  state.done[key] = ok;
+  refreshProgress();
+}
+
+function checkA1(){
+  const c = countChecked("pc_", PERSIST.length);
+  const line = document.getElementById("a1line").value.trim();
+  setOk("a1","a1ok","a1msg",(c>=4 && line.length>=2));
+}
+function checkA2(){
+  const t = document.getElementById("task").value.trim();
+  const s1 = document.getElementById("s1").value.trim();
+  const s2 = document.getElementById("s2").value.trim();
+  const s3 = document.getElementById("s3").value.trim();
+  setOk("a2","a2ok","a2msg",(t.length>=2 && s1.length>=1 && s2.length>=1 && s3.length>=1));
+}
+function checkA3(){
+  const w = document.getElementById("what").value.trim();
+  const when = document.getElementById("when").value.trim();
+  const how = document.getElementById("how").value.trim();
+  setOk("a3","a3ok","a3msg",(w.length>=2 && when.length>=2 && how.length>=2));
+}
+function checkA4(){
+  setOk("a4","a4ok","a4msg",(wsFound.size>=6));
+}
+function checkA5(){
+  const b = document.getElementById("badTalk").value.trim();
+  const g = document.getElementById("goodTalk").value.trim();
+  setOk("a5","a5ok","a5msg",(!!b && g.length>=2));
+}
+function checkA6(){
+  const n = document.querySelectorAll("#habitsGrid .togglePill.on").length;
+  setOk("a6","a6ok","a6msg",(n===4));
+}
+function checkA7(){
+  const a = document.getElementById("ifLine").value.trim();
+  const b = document.getElementById("thenLine").value.trim();
+  setOk("a7","a7ok","a7msg",(a.length>=2 && b.length>=2));
+}
+function checkA8(){
+  const a = document.getElementById("cDay").value.trim();
+  const b = document.getElementById("cDo").value.trim();
+  const c = document.getElementById("cProof").value.trim();
+  setOk("a8","a8ok","a8msg",(a.length>=2 && b.length>=2 && c.length>=2));
+}
+
+/* =========================================================
+   PROGRESSO + CERTIFICADO
+========================================================= */
+function refreshProgress(){
+  const total = Object.keys(state.done).length;
+  const done  = Object.values(state.done).filter(Boolean).length;
+  const pct   = Math.round((done/total)*100);
+
+  document.getElementById("uiProg").textContent = pct + "%";
+  document.getElementById("progFill").style.width = pct + "%";
+
+  const unlocked = (done === total);
+  document.getElementById("btnCert").disabled  = !unlocked;
+  document.getElementById("btnCert2").disabled = !unlocked;
+
+  const hint = document.getElementById("certHint");
+  const a9 = document.getElementById("a9ok");
+
+  if(unlocked){
+    hint.innerHTML = "✅ Liberado! Clique em <b>🏅 Abrir certificado</b>.";
+    speakPT("Parabéns! Você concluiu a aula 9. O certificado está liberado.");
+  }else{
+    hint.innerHTML = "🔒 Certificado bloqueado: conclua todas as atividades, incluindo a cobrinha.";
+  }
+}
+
+function checkAll(){
+  // chama os checks sem forçar
+  checkA1(); checkA2(); checkA3(); checkTip(); checkA4(); checkA5(); checkA6(); checkA7(); checkA8(); checkSnakeWin();
+}
+
+/* =========================================================
+   CERTIFICADO
+========================================================= */
+function openCert(){
+  document.getElementById("certStudent").textContent = state.student.name || "—";
+  document.getElementById("certClass").textContent   = state.student.turma || "—";
+  document.getElementById("certSchool").textContent  = state.student.escola || "—";
+
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2,"0");
+  const mm = String(d.getMonth()+1).padStart(2,"0");
+  const yyyy = d.getFullYear();
+  document.getElementById("certDate").textContent = `${dd}/${mm}/${yyyy}`;
+
+  document.getElementById("certOverlay").style.display = "flex";
+}
+function closeCert(){
+  document.getElementById("certOverlay").style.display = "none";
+}
+
+/* UTIL */
+function scrollToTop(){ window.scrollTo({top:0, behavior:"smooth"}); }
+</script>
+
+<!-- Certificado HTML (mesmo padrão) -->
+<script>
+/* injeta certificado (mantém padrão Aulas 3–8) */
+document.addEventListener("DOMContentLoaded", ()=>{
+  const cert = document.createElement("div");
+  cert.className = "overlay";
+  cert.id = "certOverlay";
+  cert.style.display = "none";
+  cert.innerHTML = `
+    <div id="certCard">
+      <div id="certInner">
+        <div id="certTitle">🏅 Certificado de Conclusão</div>
+        <div id="certSub">Projeto de Vida (AEE) — Aula 9: Persistência, Esforço e Responsabilidade Acadêmica</div>
+
+        <div id="certName">Aluno(a): <span id="certStudent">—</span></div>
+
+        <div id="certMeta">
+          Turma: <b><span id="certClass">—</span></b> &nbsp;•&nbsp;
+          Escola: <b><span id="certSchool">—</span></b><br>
+          Concluiu todas as atividades interativas da Aula 9 (45 min).<br>
+          Data: <b><span id="certDate">—</span></b>
+        </div>
+
+        <div id="certStamp">
+          <div class="sig">Professor(a) / Responsável</div>
+          <div class="sig">Coordenação</div>
+        </div>
+
+        <div id="certBtns">
+          <button class="certBtn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+          <button class="certBtn" onclick="closeCert()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(cert);
+});
+</script>
+
+</body>
+</html>
